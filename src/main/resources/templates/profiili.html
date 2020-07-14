@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/layout :: head(title='Profiili - WePa Projekti LinkedIn')">
+        <title th:title="${title}">tekstiä</title>
+    </head>
+    <body>
+        
+        <nav th:fragment="nav" class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>                        
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav nav-pills navbar-right">
+                        <li><a th:href="@{/etusivu}">Etusivu</a></li>
+                        <li><a th:href="@{/profiili}">Profiili</a></li>
+                        <li><a th:href="@{/profiili#kuva}"><i>Kuva</i></a></li>
+                        <li><a th:href="@{/profiili#taidottop3}"><i>Taidot top3</i></a></li>
+                        <li><a th:href="@{/profiili#lisaataito}"><i>Lisää taito</i></a></li>
+                        <li><a th:href="@{/profiili#taidot}"><i>Taidot</i></a></li>
+                        <li><a th:href="@{/profiili#yhteydet}"><i>Yhteydet</i></a></li>
+                        <li><a th:href="@{/haku}">Haku</a></li>
+                        <li>
+                            <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="POST">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Kirjaudu ulos</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        
+        <section class="container">
+
+            <div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Profiili</div>
+                    <div class="panel-body">
+                    
+                        <div class="col-sm-9" th:each="account : ${profiili}">
+                            <div class="input-group">
+                                <p>Nimi: <span id="sizing-addon1" th:text="${account.fullname}"></span></p>
+                            </div>
+                            <div class="input-group">
+                                <p>@<span id="sizing-addon1" th:text="${account.username}"></span></p>
+                            </div>
+                            <div class="input-group">
+                                <a th:href="@{/profiili/kayttajat/{astringofId}(astringofId=${account.astringof})}">https://sovellus.net/profiili/kayttajat/<span th:text="${account.astringof}"></span></a>  
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="panel panel-default" id="kuva">
+                        <div class="panel-heading">Lisää kuva</div>
+                            <div class="panel-body">
+                                    <div class="col-sm-9">
+                                        <div>
+                                            <form method="POST" th:action="@{/profiili/kuva}" enctype="multipart/form-data">
+                                                <input type="file" name="file" id="file" class="btn btn-default"/>
+                                                <input type="submit" value="Lisää kuva"class="btn btn-default"/>
+                                            </form>
+                                        </div>
+                                    </div>
+                            </div>
+                    </div>
+
+                    <div class="panel panel-default" id="taidottop3">
+                        <div class="panel-heading">Taidot top3</div>
+                            <div class="panel-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Taito</th>
+                                            <th>Tykkäykset</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="taito : ${taito_top}">
+                                            <td>
+                                                <span th:text="${taito.taito}"></span>
+                                            </td>
+                                            <td>
+                                                <span class="badge" th:text="${taito.tykkays}"></span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                    </div>
+                    
+                    <div class="panel panel-default" id="lisaataito">
+                                
+                        <div class="panel-heading">Lisää taito</div>
+                            <div class="panel-body">
+                                    <div class="col-sm-9">
+                                        <form th:action="@{/profiili/lisaataito}" method="POST">
+                                            <div class="input-group">
+                                                <input type="text" name="taitolisays" class="form-control input-lg" placeholder="Taitosi" id="sizing-addon1"/>
+                                                <span class="input-group-btn" id="sizing-addon2">
+                                                    <button class="btn btn-default" type="submit">Lisää</button>
+                                                </span>
+                                            </div>
+                                        </form>
+                                    </div>
+                            </div>
+                        </div>
+                                
+                                
+                        <div class="panel panel-default" id="taidot">
+                            <div class="panel-heading">Taidot</div>
+                                <div class="panel-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Taito</th>
+                                            <th>Tykkäykset</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="taito : ${taito}">
+                                            <td>
+                                                <span th:text="${taito.taito}"></span>
+                                            </td>
+                                            <td>
+                                                <span th:text="${taito.tykkays}"></span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    
+                    <div class="panel panel-default" id="yhteydet">
+                        <div class="panel-heading">Yhteydet</div>
+                        <div class="panel-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Odottavat yhteydet</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="yhteys : ${odottavat}">
+                                        <td>
+                                            <span th:text="${yhteys.yhteys}"></span>
+                                        </td>
+                                        <td>
+                                            <form th:action="@{/profiili/{yhteysId}/yhteyshyvaksy(yhteysId=${yhteys.id})}" method="POST">
+                                                <div class="input-group">
+                                                    <button  class="btn btn-default" name="yhteys" type="submit">Hyväksy</button>
+                                                </div>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form th:action="@{/profiili/{yhteysId}/yhteyshylkaa(yhteysId=${yhteys.id})}" method="POST">
+                                                <div class="input-group">
+                                                    <button  class="btn btn-default" name="yhteys" type="submit">Hylkää</button>
+                                                </div>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Yhteys</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="yhteys : ${hyvaksytyt}">
+                                        <td>
+                                            <span th:text="${yhteys.yhteys}"></span>
+                                        </td>
+                                        <td>
+                                            <form th:action="@{/profiili/{yhteysId}/yhteyskatkaise(yhteysId=${yhteys.id})}" method="POST">
+                                                <div class="input-group">
+                                                    <button  class="btn btn-default" name="yhteys" type="submit">Katkaise yhteys</button>
+                                                </div>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>   
+                </div>
+            </div>
+        </section> 
+
+        <footer th:replace="fragments/layout :: footer"></footer>
+
+    </body>
+</html>

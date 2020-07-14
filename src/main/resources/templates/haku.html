@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/layout :: head(title='Haku - WePa Projekti LinkedIn')">
+        <title th:title="${title}">tekstiä</title>
+    </head>
+    <body>
+        
+        <nav th:replace="fragments/layout :: nav">
+
+        </nav>
+
+        <section class="container">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form method="POST" th:action="@{/haku}">
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <input type="text" name="haku" class="form-control input-lg" id="sizing-addon1" placeholder="Hae käyttäjiä"/>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="submit">Etsi</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="panel panel-default">
+                <div class="panel-heading">Haku tulokset</div>
+                <div class="panel-body">
+                <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="account : ${account}">
+                                <td>
+                                    <a th:href="@{/profiili/kayttajat/{astringofId}(astringofId=${account.astringof})}">ID: <span th:text="${account.id}"></span>, <span th:text="${account.fullname}"></span></a>
+                                </td>
+                                <td>
+                                    <form th:action="@{/profiili/{yhteysId}/yhteyslisaa(yhteysId=${account.id})}" method="POST">
+                                        <div class="input-group">
+                                            <button  class="btn btn-default" name="yhteys" type="submit">Lisää yhteys</button>
+                                        </div>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <footer th:replace="fragments/layout :: footer"></footer>
+
+    </body>
+</html>

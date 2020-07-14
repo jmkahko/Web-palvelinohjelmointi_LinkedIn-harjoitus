@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/layout :: head(title='WePa Projekti LinkedIn')">
+        <title th:title="${title}">tekstiä</title>
+    </head>
+    <body>
+
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>                        
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav nav-pills navbar-right">
+                        <li><a th:href="@{/rekisteroidy}">Luo tunnus</a></li>
+                        <li class="active"><a th:href="@{/etusivu}">Kirjaudu</a></li>
+                    </ul>
+                    
+                </div>
+            </div>
+        </nav>
+        
+        <main>
+            <section class="container">
+                <p>&nbsp;</p>
+                <h2>Web-palvelinohjelmointi Java 2020 kurssin LinkedIn projekti</h2>
+                <p>Kirjaudu sisään tai luo tunnus itsellesi</p>
+            </section>
+        </main>
+        
+        <footer th:replace="fragments/layout :: footer"></footer>
+        
+    </body>
+</html>

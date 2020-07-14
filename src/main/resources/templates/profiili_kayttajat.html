@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/layout :: head(title='Profiili - WePa Projekti LinkedIn')">
+        <title th:title="${title}">tekstiä</title>
+    </head>
+    <body>
+        
+        <nav th:replace="fragments/layout :: nav">
+
+        </nav>
+        
+        <section class="container">
+            <div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Profiili</div>
+                    <div class="panel-body">
+                    
+                        <div class="col-sm-9" th:each="account : ${profiili}">
+                            <div class="input-group">
+                                <p>Nimi: <span id="sizing-addon1" th:text="${account.fullname}"></span></p>
+                            </div>
+                            <div class="input-group">
+                                <p>@<span id="sizing-addon1" th:text="${account.username}"></span></p>
+                            </div>
+                            <div class="input-group">
+                                <a th:href="@{/profiili/kayttajat/{astringofId}(astringofId=${account.astringof})}">https://sovellus.net/profiili/kayttajat/<span th:text="${account.astringof}"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Kuva</div>
+                            <div class="panel-body">
+                                    <div class="col-sm-9">
+                                    <!-- Kuva haku kommentiin, ei toimi Herokussa oheisella tavalla. Paikallisesti toimii
+                                        <div th:if="${astringof != null}">
+                                            <img th:src="@{/profiili/kayttajat/{astringof}(${astringof})}"/>
+                                        </div> -->
+                                    </div>
+                            </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Taidot top3</div>
+                            <div class="panel-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Taito</th>
+                                            <th>Tykkäykset</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="taito : ${taito_top}">
+                                            <td>
+                                                <span th:text="${taito.taito}"></span>
+                                            </td>
+                                            <td>
+                                                <span class="badge" th:text="${taito.tykkays}"></span>
+                                            </td>
+                                            <td>
+                                                <form th:action="@{/profiili/{taitotykkaysId}/tykkaataitoa(taitotykkaysId=${taito.id})}" method="POST">
+                                                    <div class="input-group">
+                                                        <button  class="btn btn-default" name="tykkaa" type="submit">Tykkää</button>
+                                                    </div>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                                
+                                <div class="panel-heading">Taidot</div>
+                                <div class="panel-body">
+                                
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Taito</th>
+                                            <th>Tykkäykset</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="taito : ${taito}">
+                                            <td>
+                                                <span th:text="${taito.taito}"></span>
+                                            </td>
+                                            <td>
+                                                <span th:text="${taito.tykkays}"></span>
+                                            </td>
+                                            <td>
+                                                <form th:action="@{/profiili/{taitotykkaysId}/tykkaataitoa(taitotykkaysId=${taito.id})}" method="POST">
+                                                    <div class="input-group">
+                                                        <button  class="btn btn-default" name="tykkaa" type="submit">Tykkää</button>
+                                                    </div>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+            </div>    
+
+        </section> 
+
+        
+        <footer th:replace="fragments/layout :: footer"></footer>
+
+    </body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/layout :: head(title='Kommentoi tai tykkää - WePa Projekti LinkedIn')">
+        <title th:title="${title}">tekstiä</title>
+    </head>
+    <body>
+        
+        <nav th:replace="fragments/layout :: nav">
+
+        </nav>
+        
+        <section class="container">
+
+            <div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Postaus</div>
+                        <div class="panel-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Postaus aika</th>
+                                        <th>Postaaja</th>
+                                        <th>Tykkäykset</th>
+                                        <th>Postaus</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span th:text="${postaus.messageDate}"></span>
+                                        </td>
+                                        <td>
+                                            <span th:text="${postaus.postaaja}"></span>
+                                        </td>
+                                        <td>
+                                            <span class="badge" th:text="${postaus.tykkays}"></span>
+                                        </td>
+                                        <td>
+                                            <span th:text="${postaus.message}"></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                            <div class="col-sm-9">
+                                <form th:action="@{/kommentoitykkays/{kommentointiId}/kommentointi(kommentointiId=${postaus.id})}" method="POST">
+                                    <div class="input-group">  
+                                        <input type="text" name="kommentoi" class="form-control input-lg" placeholder="Kommenttisi" id="sizing-addon1" />
+                                            <span class="input-group-btn" id="sizing-addon2">
+                                                <button class="btn btn-default" type="submit">Kommentoi</button>
+                                            </span>
+                                    </div> 
+                                </form>
+                            </div>
+
+                            <table>
+                                <thead>
+                                    <tr>
+                                    <td>
+                                        <form th:action="@{/kommentoitykkays/{tykkaysId}/tykkaakommentissa(tykkaysId=${postaus.id})}" method="POST">
+                                            <div class="input-group">
+                                                <button  class="btn btn-default" name="tykkaa" type="submit">Tykkää</button>
+                                            </div>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form th:action="@{/etusivu}">
+                                            <div class="input-group">
+                                                <button class="btn btn-default" type="submit">Takaisin</button>
+                                            </div>
+                                        </form>
+                                    </td>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Kommentit</div>
+                            <div class="panel-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Kommentointi aika</th>
+                                            <th>Kommentoija</th>
+                                            <th>Kommentti</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="kommentointi : ${postaus.kommentointi}">
+                                            <td>
+                                                <span th:text="${kommentointi.messageDate}"></span>
+                                            </td>
+                                            <td>
+                                                <span th:text="${kommentointi.kommentoija}"></span>
+                                            </td>
+                                            <td>
+                                                <span th:text="${kommentointi.kommentti}"></span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+        </section>
+        
+        <footer th:replace="fragments/layout :: footer"></footer>
+    </body>
+</html>
+
+

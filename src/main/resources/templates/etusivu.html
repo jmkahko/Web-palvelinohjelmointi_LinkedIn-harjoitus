@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/layout :: head(title='Etusivu - WePa Projekti LinkedIn')">
+        <title th:title="${title}">tekstiä</title>
+    </head>
+    <body>
+        
+        <nav th:replace="fragments/layout :: nav">
+
+        </nav> 
+        
+        <section class="container">
+            <div>
+                <h1 th:each="account : ${etusivu}">
+                    Hei, <span th:text="${account.fullname}"></span>
+                </h1>
+            </div>
+
+            <div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Keskustelu</div>
+                    <div class="panel-body">
+                        <p>Lisää uusi postaus. Tykkää tai kommentoi vanhaa postausta</p>
+                        <div class="col-sm-9">
+                            <form th:action="@{/etusivu}" method="POST">
+                                <div class="input-group">
+                                    <input type="text" name="message" class="form-control input-lg" placeholder="Postauksesi" id="sizing-addon1" />
+                                    <span class="input-group-btn" id="sizing-addon2">
+                                        <button class="btn btn-default" type="submit">Postaa</button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Postaus aika</th>
+                                <th>Postaaja</th>
+                                <th>Tykkäykset</th>
+                                <th>Postaus</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                            <tbody>
+                            <tr th:each="postaus : ${postaukset}">
+                                <td>
+                                    <span th:text="${postaus.messageDate}"></span>
+                                </td>
+                                <td>
+                                    <span th:text="${postaus.postaaja}"></span>
+                                </td>
+                                <td>
+                                    <span class="badge" th:text="${postaus.tykkays}"></span>
+
+                                </td>
+                                <td>
+                                    <span th:text="${postaus.message}"></span>
+                                </td>
+                                <td>
+                                    <form th:action="@{/kommentoitykkays/{tykkaysId}/tykkaa(tykkaysId=${postaus.id})}" method="POST">
+                                        <div class="input-group">
+                                            <span>
+                                                <button class="btn btn-default" name="tykkaa" type="submit">Tykkää</button>
+                                            </span>
+                                        </div>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form th:action="@{/kommentoitykkays/{id}(id=${postaus.id})}">
+                                        <div class="input-group">
+                                            <span>
+                                                <button class="btn btn-default" name="kommentoi" type="submit">Kommentoi</button>
+                                            </span>
+                                        </div>
+                                    </form>
+                                </td>  
+                            </tr>  
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        
+        <footer th:replace="fragments/layout :: footer"></footer>
+    </body>
+</html>

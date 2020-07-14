@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    
+    <head th:replace="fragments/layout :: head(title='Luo käyttäjätunnus - WePa Projekti LinkedIn')">
+        <title th:title="${title}">tekstiä</title>
+    </head>
+    
+    <body>
+
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>                        
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav nav-pills navbar-right">
+                        <li class="active"><a th:href="@{/etusivu}">Kirjaudu</a></li>
+                    </ul>
+                    
+                </div>
+            </div>
+        </nav>
+        
+        <section class="container">
+            <div class="col-sm-9">
+                <p>&nbsp;</p>
+                <h2>Wepa Projectin LinkedIn työ</h2>
+                <p>Luo käyttäjätunnus</p>
+            </div>
+            <form method="POST" th:action="@{/rekisteroidy}">
+                <div class="col-sm-9">
+                        <div class="input-group">
+                            <span class="input-group-addon btn-default" id="sizing-addon1">Nimesi</span>
+                            <input type="text" name="fullname" class="form-control" placeholder="Nimesi" id="sizing-addon1">
+                        </div>
+                
+                        <div class="input-group">
+                            <span class="input-group-addon dark" id="sizing-addon1"><i class="glyphicon glyphicon-user"></i></span>
+                            <input type="text" name="username" class="form-control" placeholder="Käyttäjätunnus" id="sizing-addon1">
+                        </div>
+                            
+                        <div class="input-group">
+                            <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input type="password" name="password" class="form-control" placeholder="Salasanasi" id="sizing-addon1">
+                        </div>
+
+                        <label for="basic-url">Profiilisi URL</label>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="sizing-addon1">https://sovellus.net/profiili/kayttajat/</span>
+                            <input type="text" name="astringof" class="form-control" id="sizing-addon1">
+                        </div>
+                        <div class="input-group">
+                            <button  class="btn btn-default" type="submit">Rekisteröidy</button>
+                        </div>
+                </div>
+            </form>
+            <form th:action="@{/}">
+                <div class="col-sm-9">
+                    <button class="btn btn-default" type="submit">Takaisin</button>
+                </div>
+            </form>
+        </section>
+
+        <footer th:replace="fragments/layout :: footer"></footer>
+
+    </body>
+</html>
